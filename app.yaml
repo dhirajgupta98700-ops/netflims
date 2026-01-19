@@ -1,0 +1,16 @@
+name: netflims
+services:
+- name: netflims-web
+  github:
+    repo: dhirajgupta98700-ops/netflims
+    branch: main
+  build_command: echo "Building frontend..."
+  source_dir: /
+  http_port: 8080
+  static_sites:
+  - source_dir: /
+    routes:
+    - path: /
+  envs:
+  - key: FLASK_ENV
+    value: production
