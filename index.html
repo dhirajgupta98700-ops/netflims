@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netflims - Stream Your Favorite Movies</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+
+    <!-- Full Screen Auth Panel (Loads First) -->
+    <div class="auth-panel" id="authPanel">
+        <div class="auth-panel-content">
+            <div class="auth-logo">
+                <h1>🎬 NETFLIMS</h1>
+                <p>Your Gateway to Entertainment</p>
+            </div>
+            
+            <div class="auth-panel-tabs">
+                <button class="auth-panel-tab-btn active" id="authPanelLoginTab">Login</button>
+                <button class="auth-panel-tab-btn" id="authPanelSignupTab">Sign Up</button>
+            </div>
+            
+            <!-- Login Form in Auth Panel -->
+            <form class="auth-panel-form" id="authPanelLoginForm">
+                <div class="form-group">
+                    <label for="authPanelEmail">Email</label>
+                    <input type="email" id="authPanelEmail" placeholder="Enter your email" required>
+                    <span class="error-message"></span>
+                </div>
+                <div class="form-group">
+                    <label for="authPanelPassword">Password</label>
+                    <input type="password" id="authPanelPassword" placeholder="Enter your password" required>
+                    <span class="error-message"></span>
+                </div>
+                <div class="form-group checkbox">
+                    <input type="checkbox" id="authPanelRememberMe">
+                    <label for="authPanelRememberMe" class="checkbox-label">Remember me</label>
+                </div>
+                <button type="submit" class="auth-panel-btn">Login</button>
+                <p class="auth-message"></p>
+                <p class="demo-hint">💡 Demo: demo@netflims.com / Demo@123</p>
+            </form>
+            
+            <!-- Signup Form in Auth Panel -->
+            <form class="auth-panel-form hidden" id="authPanelSignupForm">
+                <div class="form-group">
+                    <label for="authPanelName">Full Name</label>
+                    <input type="text" id="authPanelName" placeholder="Enter your full name" required>
+                    <span class="error-message"></span>
+                </div>
+                <div class="form-group">
+                    <label for="authPanelSignupEmail">Email</label>
+                    <input type="email" id="authPanelSignupEmail" placeholder="Enter your email" required>
+                    <span class="error-message"></span>
+                </div>
+                <div class="form-group">
+                    <label for="authPanelSignupPassword">Password</label>
+                    <input type="password" id="authPanelSignupPassword" placeholder="At least 8 characters" required>
+                    <span class="error-message"></span>
+                    <div class="password-strength"></div>
+                </div>
+                <div class="form-group">
+                    <label for="authPanelConfirmPassword">Confirm Password</label>
+                    <input type="password" id="authPanelConfirmPassword" placeholder="Confirm your password" required>
+                    <span class="error-message"></span>
+                </div>
+                <button type="submit" class="auth-panel-btn">Create Account</button>
+                <p class="auth-message"></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Website Content (Hidden Until Login) -->
+    <div class="website-content" id="websiteContent" style="display: none;">
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <h1>NETFLIMS</h1>
+                <p>Upcoming Releases</p>
+            </div>
+            <div class="search-bar">
+                <input
+                    type="text"
+                    id="searchInput"
+                    class="search-input"
+                    placeholder="Search movies..."
+                    autocomplete="off"
+                >
+                <span class="search-icon">🔍</span>
+            </div>
+            <button id="signInBtn" class="sign-in-btn">Sign In</button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section (Featured Movie) -->
+        <section class="hero" id="heroSection">
+            <div class="hero-background" id="heroBackground">
+                <iframe id="heroTrailerVideo" class="hero-trailer-video" 
+                    src="" 
+                    frameborder="0" 
+                    allow="autoplay; encrypted-media" 
+                    allowfullscreen
+                    style="display: none;">
+                </iframe>
+            </div>
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 id="heroTitle" class="hero-title"></h1>
+                    <p id="heroOverview" class="hero-overview"></p>
+                    <button id="heroPlayButton" class="hero-play-btn">
+                        <span class="play-symbol">▶</span>
+                        Play Trailer
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Genre Filter -->
+        <section class="genre-filter-section">
+            <div class="genre-filter-header">
+                <h2>Filter by Genre</h2>
+            </div>
+            <div class="genre-buttons" id="genreButtons">
+                <!-- Genre buttons will be generated here -->
+            </div>
+
+            <div class="indian-filter-header">
+                <h2>Indian Cinema</h2>
+            </div>
+            <div class="indian-buttons" id="indianButtons">
+                <button class="indian-btn" data-language="hi" data-region="IN">🎬 Bollywood</button>
+                <button class="indian-btn" data-language="te" data-region="IN">🎬 Tollywood</button>
+                <button class="indian-btn" data-language="ta" data-region="IN">🎬 Kollywood</button>
+            </div>
+        </section>
+
+        <!-- Trending Now Carousel -->
+        <section class="carousel-section">
+            <div class="carousel-header">
+                <h2>Trending Now</h2>
+            </div>
+            <div class="carousel-container">
+                <div class="carousel" id="trendingCarousel">
+                    <!-- Movie posters will be generated here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Upcoming Carousel -->
+        <section class="carousel-section">
+            <div class="carousel-header">
+                <h2>Coming Soon</h2>
+            </div>
+            <div class="carousel-container">
+                <div class="carousel" id="upcomingCarousel">
+                    <!-- Movie posters will be generated here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Top Rated Carousel -->
+        <section class="carousel-section">
+            <div class="carousel-header">
+                <h2>Top Rated</h2>
+            </div>
+            <div class="carousel-container">
+                <div class="carousel" id="topRatedCarousel">
+                    <!-- Movie posters will be generated here -->
+                </div>
+            </div>
+        </section>
+
+    <!-- Modal (Lightbox) -->
+    <div class="modal" id="trailerModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeModal" onclick="closeTrailer()">✕</button>
+            <div class="modal-header">
+                <h2 id="movieTitle"></h2>
+                <p id="movieRelease" class="release-date"></p>
+            </div>
+            <div class="video-container">
+                <iframe
+                    id="trailerVideo"
+                    width="100%"
+                    height="500"
+                    src=""
+                    frameborder="0"
+                    allow="autoplay; encrypted-media"
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal login-modal" id="loginModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeLoginModal">&times;</button>
+            <div class="modal-header">
+                <h2 id="authTitle">Sign In</h2>
+            </div>
+            <div class="auth-tabs">
+                <button class="auth-tab-btn active" id="loginTabBtn">Sign In</button>
+                <button class="auth-tab-btn" id="registerTabBtn">Sign Up</button>
+            </div>
+            
+            <!-- Login Form -->
+            <form class="auth-form" id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" placeholder="Enter your email" required>
+                    <span class="error-message" id="loginEmailError"></span>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                    <span class="error-message" id="loginPasswordError"></span>
+                </div>
+                <div class="form-group checkbox">
+                    <input type="checkbox" id="rememberMe">
+                    <label for="rememberMe" class="checkbox-label">Remember me</label>
+                </div>
+                <button type="submit" class="auth-btn">Sign In</button>
+                <p class="auth-message" id="loginMessage"></p>
+            </form>
+
+            <!-- Registration Form -->
+            <form class="auth-form hidden" id="registerForm">
+                <div class="form-group">
+                    <label for="registerName">Full Name</label>
+                    <input type="text" id="registerName" placeholder="Enter your full name" required>
+                    <span class="error-message" id="registerNameError"></span>
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">Email</label>
+                    <input type="email" id="registerEmail" placeholder="Enter your email" required>
+                    <span class="error-message" id="registerEmailError"></span>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Password</label>
+                    <input type="password" id="registerPassword" placeholder="At least 8 characters" required>
+                    <span class="error-message" id="registerPasswordError"></span>
+                    <div class="password-strength" id="passwordStrength"></div>
+                </div>
+                <div class="form-group">
+                    <label for="registerConfirmPassword">Confirm Password</label>
+                    <input type="password" id="registerConfirmPassword" placeholder="Confirm your password" required>
+                    <span class="error-message" id="registerConfirmPasswordError"></span>
+                </div>
+                <button type="submit" class="auth-btn">Sign Up</button>
+                <p class="auth-message" id="registerMessage"></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- CineBot Chat Button and Container -->
+    <div class="cinebot-chat-button" id="cinebotChatButton" title="Chat with CineBot">
+        <span class="chat-icon">💬</span>
+    </div>
+
+    <div class="cinebot-chat-container" id="cinebotChatContainer">
+        <div class="chat-header">
+            <h3>CineBot</h3>
+            <button class="chat-close-btn" id="chatCloseBtn">&times;</button>
+        </div>
+        <div class="chat-history" id="chatHistory"></div>
+        <div class="chat-input-area">
+            <input 
+                type="text" 
+                id="chatInput" 
+                class="chat-input" 
+                placeholder="Ask me about movies..."
+                autocomplete="off"
+            >
+            <button class="chat-send-btn" id="chatSendBtn">Send</button>
+        </div>
+    </div>
+    </div><!-- End of website-content -->
+
+    <script src="script.js"></script>
+</body>
+</html>
